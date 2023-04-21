@@ -1,0 +1,34 @@
+[1] "SiO2"
+
+Call:  glm(formula = vibrioData ~ variable, family = binomial)
+
+Coefficients:
+(Intercept)     variable  
+    2.31643     -0.02176  
+
+Degrees of Freedom: 23 Total (i.e. Null);  22 Residual
+Null Deviance:	    21.63 
+Residual Deviance: 20.78 	AIC: 24.78
+
+Call:
+glm(formula = vibrioData ~ variable, family = binomial)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.0974   0.4692   0.5099   0.6053   0.9319  
+
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)  
+(Intercept)  2.31643    1.00364   2.308    0.021 *
+variable    -0.02176    0.02326  -0.935    0.350  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 21.627  on 23  degrees of freedom
+Residual deviance: 20.776  on 22  degrees of freedom
+AIC: 24.776
+
+Number of Fisher Scoring iterations: 4
+

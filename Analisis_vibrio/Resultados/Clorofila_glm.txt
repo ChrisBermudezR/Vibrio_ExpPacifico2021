@@ -1,0 +1,34 @@
+[1] "Clorofila"
+
+Call:  glm(formula = vibrioData ~ variable, family = binomial)
+
+Coefficients:
+(Intercept)     variable  
+     2.3362      -0.4342  
+
+Degrees of Freedom: 23 Total (i.e. Null);  22 Residual
+Null Deviance:	    21.63 
+Residual Deviance: 20.39 	AIC: 24.39
+
+Call:
+glm(formula = vibrioData ~ variable, family = binomial)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.0670   0.4763   0.5029   0.5721   1.0373  
+
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)  
+(Intercept)   2.3362     0.9076   2.574   0.0101 *
+variable     -0.4342     0.3797  -1.143   0.2529  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 21.627  on 23  degrees of freedom
+Residual deviance: 20.389  on 22  degrees of freedom
+AIC: 24.389
+
+Number of Fisher Scoring iterations: 4
+

@@ -1,0 +1,34 @@
+[1] "NO2"
+
+Call:  glm(formula = vibrioData ~ variable, family = binomial)
+
+Coefficients:
+(Intercept)     variable  
+      2.229       -1.802  
+
+Degrees of Freedom: 23 Total (i.e. Null);  22 Residual
+Null Deviance:	    21.63 
+Residual Deviance: 20.91 	AIC: 24.91
+
+Call:
+glm(formula = vibrioData ~ variable, family = binomial)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.0756   0.4749   0.5094   0.5983   0.8924  
+
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)  
+(Intercept)   2.2290     0.9753   2.285   0.0223 *
+variable     -1.8021     2.1088  -0.855   0.3928  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 21.627  on 23  degrees of freedom
+Residual deviance: 20.910  on 22  degrees of freedom
+AIC: 24.91
+
+Number of Fisher Scoring iterations: 4
+
