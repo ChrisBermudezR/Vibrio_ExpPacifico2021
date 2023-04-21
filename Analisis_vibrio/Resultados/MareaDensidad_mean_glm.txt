@@ -1,0 +1,34 @@
+[1] "Densidad_mean"
+
+Call:  glm(formula = Factor ~ variable, family = binomial)
+
+Coefficients:
+(Intercept)     variable  
+  -169.8562       0.1684  
+
+Degrees of Freedom: 23 Total (i.e. Null);  22 Residual
+Null Deviance:	    32.6 
+Residual Deviance: 26.45 	AIC: 30.45
+
+Call:
+glm(formula = Factor ~ variable, family = binomial)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.7400  -0.9935   0.5845   0.6986   1.6127  
+
+Coefficients:
+             Estimate Std. Error z value Pr(>|z|)  
+(Intercept) -169.8562    77.2886  -2.198   0.0280 *
+variable       0.1684     0.0765   2.202   0.0277 *
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 32.601  on 23  degrees of freedom
+Residual deviance: 26.450  on 22  degrees of freedom
+AIC: 30.45
+
+Number of Fisher Scoring iterations: 4
+

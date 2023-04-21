@@ -1,0 +1,13 @@
+[1] "PC02"
+
+Call:
+ randomForest(formula = factor(Factor) ~ variable) 
+               Type of random forest: classification
+                     Number of trees: 500
+No. of variables tried at each split: 1
+
+        OOB estimate of  error rate: 54.17%
+Confusion matrix:
+  0 1 class.error
+0 4 6         0.6
+1 7 7         0.5
