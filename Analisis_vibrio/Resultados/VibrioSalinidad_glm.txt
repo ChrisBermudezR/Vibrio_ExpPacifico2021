@@ -1,0 +1,32 @@
+[1] "Salinidad"
+
+Call:  glm(formula = Factor ~ variable, family = binomial)
+
+Coefficients:
+(Intercept)     variable  
+    -109.52        12.23  
+
+Degrees of Freedom: 16 Total (i.e. Null);  15 Residual
+Null Deviance:	    12.32 
+Residual Deviance: 2.188e-09 	AIC: 4
+
+Call:
+glm(formula = Factor ~ variable, family = binomial)
+
+Deviance Residuals: 
+      Min         1Q     Median         3Q        Max  
+-3.01e-05   2.10e-08   2.10e-08   2.10e-08   3.58e-05  
+
+Coefficients:
+             Estimate Std. Error z value Pr(>|z|)
+(Intercept)   -109.52  100270.01  -0.001    0.999
+variable        12.23   10668.92   0.001    0.999
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 1.2315e+01  on 16  degrees of freedom
+Residual deviance: 2.1878e-09  on 15  degrees of freedom
+AIC: 4
+
+Number of Fisher Scoring iterations: 25
+
