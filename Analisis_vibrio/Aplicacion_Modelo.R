@@ -1,3 +1,10 @@
+#Título del script: Aplicación de
+#Autores: Christian Bermúdez-Rivas 
+#Objetivo: Realizar los análisis de los datos físico químicos.
+#Lenguaje: R
+#Fecha: Junio 2022
+#Notas: No olvidar instalar los paquetes necesarios para correr el script
+###############################################################################################################################
 
 library(pROC) #glm
 library(randomForest) #Random forest
@@ -82,5 +89,3 @@ modelosEval_Factor(PC03,"PC03","PC03", vibrioData, "Vibrio")
 dev.off()
 
 
-svvv<-svm(factor(vibrio) ~ Densidad,data = vibrio, scale = FALSE, kernel = "radial", cost = 5)
-plot(svvv,vibrio~ Densidad,data = vibrio)

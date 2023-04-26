@@ -58,14 +58,14 @@ train_control = trainControl(method="cv", number=500)
 
 
 #svm with rbf kernel
-rf_mod_fit=train(Vibrio~ Densidad + Salinidad,
+rf_mod_fit=train(Vibrio~ . + Salinidad,
                data=training,trControl=train_control,method="rf")
 
-svmRadialSigma_mod_fit=train(Vibrio~ Densidad + Salinidad,
+svmRadialSigma_mod_fit=train(Vibrio~ . + Salinidad,
                data=training,trControl=train_control,method="svmRadialSigma")
 
 
-glm_Logit_mod_fit=train(Vibrio~  Densidad + Salinidad,
+glm_Logit_mod_fit=train(Vibrio~  . + Salinidad,
                data=training,trControl=train_control,method="glm", family = "binomial")
 
 
