@@ -21,7 +21,7 @@ vibrio=read.csv("VibrioTotal.csv")
 
 
 #Calcular los componentes principales
-Pac_data_pca <- prcomp(na.omit(vibrio[,6:22]), scale = TRUE)
+Pac_data_pca <- stats::prcomp(na.omit(vibrio[,6:22]), scale = TRUE)
 print(Pac_data_pca)
 summary(Pac_data_pca)
 Pac_Comp_var<-as.data.frame(Pac_data_pca[5])
