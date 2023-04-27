@@ -16,6 +16,7 @@ library(factoextra)
 library(corrplot)
 library(usethis)
 library(RColorBrewer)
+
 vibrio=read.csv("VibrioTotal.csv")
 
 
@@ -23,6 +24,7 @@ vibrio=read.csv("VibrioTotal.csv")
 
 #Correlación multiple
 mul_correlacion<-stats::cor(na.omit(vibrio[,6:22]),  method = c("spearman") )
+write.table(mul_correlacion, "mul_correlacion.csv", dec = ".", sep=",", row.names = FALSE)
 png(filename = "./Imagenes/corr_Matrix.png", res = 300, width = 12, height = 12, units = "cm", pointsize = 5, type = c("cairo"))
 
 corrplot::corrplot(mul_correlacion, 
@@ -82,12 +84,12 @@ Pac_graf01<-factoextra::fviz_eig(Pac_data_pca,addlabels = TRUE,hjust = -0.3,line
 
 
 Pac_PCA_12<-factoextra::fviz_pca_var(Pac_data_pca, 
-                                    axes = c(1,2),
-                                    
-                                 col.var = "contrib",
-                                 gradient.cols = c("#2c7fb8", "#ffeda0", "#f03b20"),
-                                 ggtheme = theme_minimal())+
-  labs(x="PC1 (40.7%)", y="PC2 (17.5%)")+ theme(plot.title = element_blank())
+                                      axes = c(1,2),
+                                      col.var = "contrib",
+                                      gradient.cols = c("#2c7fb8", "#ffeda0", "#f03b20"),
+                                      ggtheme = theme_minimal())+
+                                      labs(x="PC1 (40.7%)", y="PC2 (17.5%)")+   
+                                      theme(plot.title = element_blank())
 
 Pac_PCA_23<-factoextra::fviz_pca_var(Pac_data_pca, 
                                  axes = c(2,3),

@@ -62,21 +62,45 @@ svmRadialSigma_mod_fit=train(Vibrio~ Salinidad + Temperatura + DensidadFito + Cl
 glm_Logit_mod_fit=train(Vibrio~ Salinidad + Temperatura + DensidadFito + Clorofila,
                data=training,trControl=train_control,method="glm", family = "binomial")
 
+set.seed (1)
 knn_mod_fit=train(Vibrio~  Salinidad + Temperatura + DensidadFito + Clorofila, 
                   data=training,trControl=train_control,method="knn")
 
 
-summary(rf_mod_fit)
-summary(svmRadialSigma_mod_fit)
-summary(glm_Logit_mod_fit)
-summary(knn_mod_fit)
+RF_smm<-summary(rf_mod_fit)
+svmRadialSigma_smm<-summary(svmRadialSigma_mod_fit)
+glm_smm<-summary(glm_Logit_mod_fit)
+knn_smm<-summary(knn_mod_fit)
+capture.output("RF_smm",
+               RF_smm,
+               "svmRadialSigma_smm",
+               svmRadialSigma_smm,
+               "Rglm_smm",
+               glm_smm,
+               "knn_smm",
+               knn_smm,
+               file="Resultados_Modelos.txt"
+               )
+
 ### for polynomial kernel specify method="svmPoly"
 
 ## importance of the different predictors
-varImp(rf_mod_fit)
-varImp(svmRadialSigma_mod_fit)
-varImp(glm_Logit_mod_fit)
-varImp(knn_mod_fit)
+RF_varImp<-varImp(rf_mod_fit)
+svm_varImp<-varImp(svmRadialSigma_mod_fit)
+glm_varImp<-varImp(glm_Logit_mod_fit)
+knn_varImp<-varImp(knn_mod_fit)
+
+
+capture.output("RF_varImp",
+               RF_varImp,
+               "svm_varImp",
+               svm_varImp,
+               "glm_varImp",
+               glm_varImp,
+               "knn_varImp",
+               knn_varImp,
+               file="varImp_Modelos.txt"
+)
 
 ## test the model
 rf_mod_fit_predict=as.numeric(predict(rf_mod_fit, newdata=testing))
@@ -92,7 +116,6 @@ confusionMatrix(predict(glm_Logit_mod_fit, newdata=testing), testing$Vibrio)$ove
 confusionMatrix(predict(knn_mod_fit, newdata=testing), testing$Vibrio)$overall[1]
 
 
-predict(rf_mod_fit)
 
 roc(testing[,"Vibrio"], 
     glm_Logit_mod_fit_predict, 
@@ -219,17 +242,15 @@ dev.off()
 
 Datos_Raster=read.csv("Datos_Raster.csv")
 
-costa<-rgdal::readOGR("./SIG_Datos/costa.shp")
-rios<-readOGR("./SIG_Datos/rios_wgs84.shp")
-estaciones<-readOGR("./SIG_Datos/estaciones.shp")
-areas_protegidas<-readOGR("./SIG_Datos/areas_protegidas.shp")
-
 Datos_Raster$MareaFactor
 Datos_Raster_alta<-  subset(Datos_Raster,MareaFactor == "1")
 Datos_Raster_baja<-  subset(Datos_Raster,MareaFactor == "0")
 
-source("./Funciones/rasterizar_Variable.R")
-#rasterizar_Variable(nombre_variable,longitud, latitud, variable, marea, leyenda)
+rasterVar<-list.files(path="./SIG_Datos/grids", pattern = ".tif$", full.names = TRUE)
+rasterVar_names<-list.files(path="./SIG_Datos/grids", pattern = ".tif$", full.names = FALSE)
+
+for(Archivos in 1:length(rasterVar_names)) assign(rasterVar_names[Archivos], raster(rasterVar[Archivos]))
+
 rasterizar_Variable("Salinidad", Datos_Raster_alta$Longitude, Datos_Raster_alta$Latitude, Datos_Raster_alta$Salinidad, "Alta", "Salinidad", Datos_Raster)
 rasterizar_Variable("Salinidad", Datos_Raster_baja$Longitude, Datos_Raster_baja$Latitude, Datos_Raster_baja$Salinidad, "Baja","Salinidad", Datos_Raster)
 
@@ -241,6 +262,23 @@ rasterizar_Variable("DensidadFito", Datos_Raster_baja$Longitude, Datos_Raster_ba
 
 rasterizar_Variable("Clorofila", Datos_Raster_alta$Longitude, Datos_Raster_alta$Latitude, Datos_Raster_alta$Clorofila, "Alta", "Clorofila   ", Datos_Raster)
 rasterizar_Variable("Clorofila", Datos_Raster_baja$Longitude, Datos_Raster_baja$Latitude, Datos_Raster_baja$Clorofila, "Baja","Clorofila   ", Datos_Raster)
+
+
+
+Temperatura_Alta<-as.data.frame(Temperatura_Alta.tif, xy=TRUE)
+Temperatura_Baja<-as.data.frame(Temperatura_Baja.tif, xy=TRUE)
+
+Salinidad_Alta<-as.data.frame(Salinidad_Alta.tif, xy=TRUE)
+Salinidad_Baja<-as.data.frame(Salinidad_Baja.tif, xy=TRUE)
+
+DensidadFito_Alta<-as.data.frame(DensidadFito_Alta.tif, xy=TRUE)
+DensidadFito_Baja<-as.data.frame(DensidadFito_Baja.tif, xy=TRUE)
+
+Clorofila_Alta<-as.data.frame(Clorofila_Alta.tif, xy=TRUE)
+Clorofila_Baja<-as.data.frame(Clorofila_Baja.tif, xy=TRUE)
+
+Densidad_Alta<-as.data.frame(Densidad_Alta.tif, xy=TRUE)
+Densidad_Baja<-as.data.frame(Densidad_Baja.tif, xy=TRUE)
 
 
 
@@ -279,7 +317,7 @@ colnames(Alta_data_variables)<-c("Temperatura", "Salinidad", "DensidadFito", "Cl
 Baja_data_variables<-cbind(Temperatura_Baja$Temperatura_Baja,Salinidad_Baja$Salinidad_Baja, DensidadFito_Baja$DensidadFito_Baja, Clorofila_Baja$Clorofila_Baja)
 colnames(Baja_data_variables)<-c("Temperatura", "Salinidad","DensidadFito", "Clorofila")
 
-
+######Probabilidad
 rf_Alta_predict=predict(rf_mod_fit, newdata=Alta_data_variables, type="prob") #Se puede predecir con distribución probabilistica predict (type="prob") o categórica (type="raw")
 rf_Alta_predict_df<-as.data.frame(rf_Alta_predict)
 rf_Alta<-cbind(Temperatura_Alta$x, Temperatura_Alta$y, rf_Alta_predict_df )
@@ -289,7 +327,8 @@ plot(rf_Alta_rasterPrediccion)
 
 
 
-rf_MA<-ggplot(rf_Alta, aes(Longitud, Latitud)) +
+
+rf_MA_prob<-ggplot(rf_Alta, aes(Longitud, Latitud)) +
   geom_tile(aes(fill = Probabilidad))+
   geom_polygon(data=costa, aes(x= long, y= lat, group=group), colour="#38a800", fill="#38a800") +
   #geom_polygon(data=rios, aes(x= long, y= lat, group=group), colour="#bcebfb", fill="#bcebfb") +
@@ -314,7 +353,7 @@ colnames(rf_Baja)<-c("Longitud","Latitud","Vibrio_rf_Baja", "Probabilidad")
 rasterPrediccion<-rasterFromXYZ(rf_Baja)
 plot(rasterPrediccion)
 
-rf_MB<-ggplot(rf_Baja, aes(Longitud, Latitud)) +
+rf_MB_prob<-ggplot(rf_Baja, aes(Longitud, Latitud)) +
   geom_tile(aes(fill = Probabilidad))+
   geom_polygon(data=costa, aes(x= long, y= lat, group=group), colour="#38a800", fill="#38a800") +
   #geom_polygon(data=rios, aes(x= long, y= lat, group=group), colour="#bcebfb", fill="#bcebfb") +
@@ -339,7 +378,7 @@ colnames(glm_Alta)<-c("Longitud","Latitud","glm_Alta", "Probabilidad")
 rasterPrediccion<-rasterFromXYZ(glm_Alta)
 plot(rasterPrediccion)
 
-glm_MA<-ggplot(glm_Alta, aes(Longitud, Latitud)) +
+glm_MA_prob<-ggplot(glm_Alta, aes(Longitud, Latitud)) +
   geom_tile(aes(fill = Probabilidad))+
   geom_polygon(data=costa, aes(x= long, y= lat, group=group), colour="#38a800", fill="#38a800") +
   #geom_polygon(data=rios, aes(x= long, y= lat, group=group), colour="#bcebfb", fill="#bcebfb") +
@@ -363,7 +402,7 @@ colnames(glm_Baja)<-c("Longitud","Latitud","Vibrio_glm_Baja", "Probabilidad")
 rasterPrediccion<-rasterFromXYZ(glm_Baja)
 plot(rasterPrediccion)
 
-glm_MB<-ggplot(glm_Baja, aes(Longitud, Latitud)) +
+glm_MB_prob<-ggplot(glm_Baja, aes(Longitud, Latitud)) +
   geom_tile(aes(fill = Probabilidad))+
   geom_polygon(data=costa, aes(x= long, y= lat, group=group), colour="#38a800", fill="#38a800") +
   #geom_polygon(data=rios, aes(x= long, y= lat, group=group), colour="#bcebfb", fill="#bcebfb") +
@@ -380,6 +419,95 @@ glm_MB<-ggplot(glm_Baja, aes(Longitud, Latitud)) +
                                    "#d53e4f"))+
   labs(fill="Probabilidad", title= "glm - Marea Baja")
 
+png(filename = "./Imagenes/Probabilidad_ML.png", res = 300, width = 15, height = 20, units = "cm", pointsize = 13)
 
-ggarrange( glm_MA, glm_MB,rf_MA, rf_MB, ncol =  2, nrow = 2,common.legend = TRUE, legend ="bottom")
+ggarrange( glm_MA_prob, glm_MB_prob,rf_MA_prob, rf_MB_prob, ncol =  2, nrow = 2,common.legend = TRUE, legend ="bottom")
+dev.off()
 
+
+
+
+######Presencia####
+rf_Alta_predict_raw=predict(rf_mod_fit, newdata=Alta_data_variables, type="raw") #Se puede predecir con distribución probabilistica predict (type="prob") o categórica (type="raw")
+rf_Alta_predict_df_raw<-as.data.frame(rf_Alta_predict)
+rf_Alta_raw<-cbind(Temperatura_Alta$x, Temperatura_Alta$y, rf_Alta_predict_df )
+colnames(rf_Alta_raw)<-c("Longitud","Latitud", "Presencia")
+rf_Alta_rasterPrediccion_raw<-rasterFromXYZ(rf_Alta_raw)
+plot(rf_Alta_rasterPrediccion_raw)
+
+
+
+rf_MA_raw<-ggplot(rf_Alta_raw, aes(Longitud, Latitud)) +
+  geom_tile(aes(fill = Presencia))+
+  geom_polygon(data=costa, aes(x= long, y= lat, group=group), colour="#38a800", fill="#38a800") +
+  #geom_polygon(data=rios, aes(x= long, y= lat, group=group), colour="#bcebfb", fill="#bcebfb") +
+  coord_sf(xlim = c(-78.595484615, -78.053463218), ylim = c(2.339426503 , 3.162306176), expand = FALSE)+   
+  geom_polygon(data=areas_protegidas, aes(x= long, y= lat, group=group), colour="red", fill="transparent", linewidth=1) +
+  theme(panel.background = element_rect(fill = '#bfe8ff', color="#737373"),
+        panel.grid.major = element_line(color = '#252525', linetype = 'dotted'))+
+  scale_fill_manual(values =  c("#d53e4f"))+
+  labs(fill="Incidencia", title= "RF - Marea Alta")
+
+
+rf_Baja_predict_raw=predict(rf_mod_fit, newdata=Baja_data_variables, type="raw")
+rf_Baja_predict_df_raw<-as.data.frame(rf_Baja_predict_raw)
+rf_Baja_raw<-cbind(Temperatura_Baja$x, Temperatura_Baja$y, rf_Baja_predict_df_raw )
+colnames(rf_Baja_raw)<-c("Longitud","Latitud","Presencia")
+rasterPrediccion_raw<-rasterFromXYZ(rf_Baja_raw)
+plot(rasterPrediccion)
+
+rf_MB_raw<-ggplot(rf_Baja_raw, aes(Longitud, Latitud)) +
+  geom_tile(aes(fill = Presencia))+
+  geom_polygon(data=costa, aes(x= long, y= lat, group=group), colour="#38a800", fill="#38a800") +
+  #geom_polygon(data=rios, aes(x= long, y= lat, group=group), colour="#bcebfb", fill="#bcebfb") +
+  coord_sf(xlim = c(-78.595484615, -78.053463218), ylim = c(2.339426503 , 3.162306176), expand = FALSE)+   
+  geom_polygon(data=areas_protegidas, aes(x= long, y= lat, group=group), colour="red", fill="transparent", linewidth=1) +
+  theme(panel.background = element_rect(fill = '#bfe8ff', color="#737373"),
+        panel.grid.major = element_line(color = '#252525', linetype = 'dotted'))+
+  scale_fill_manual(values = c("#3288bd", 
+                                   "#d53e4f"))+
+  labs(fill="Incidencia", title= "RF - Marea Baja")
+
+
+glm_Alta_predict_raw=predict(glm_Logit_mod_fit, newdata=Alta_data_variables, type="raw")
+glm_Alta_predict_df_raw<-as.data.frame(glm_Alta_predict_raw)
+glm_Alta_raw<-cbind(Temperatura_Alta$x, Temperatura_Alta$y, glm_Alta_predict_df_raw )
+colnames(glm_Alta_raw)<-c("Longitud","Latitud","Presencia")
+rasterPrediccion<-rasterFromXYZ(glm_Alta_raw)
+plot(rasterPrediccion_raw)
+
+glm_MA_raw<-ggplot(glm_Alta_raw, aes(Longitud, Latitud)) +
+  geom_tile(aes(fill = Presencia))+
+  geom_polygon(data=costa, aes(x= long, y= lat, group=group), colour="#38a800", fill="#38a800") +
+  #geom_polygon(data=rios, aes(x= long, y= lat, group=group), colour="#bcebfb", fill="#bcebfb") +
+  coord_sf(xlim = c(-78.595484615, -78.053463218), ylim = c(2.339426503 , 3.162306176), expand = FALSE)+   
+  geom_polygon(data=areas_protegidas, aes(x= long, y= lat, group=group), colour="red", fill="transparent", linewidth=1) +
+  theme(panel.background = element_rect(fill = '#bfe8ff', color="#737373"),
+        panel.grid.major = element_line(color = '#252525', linetype = 'dotted'))+
+  scale_fill_manual(values = c("#3288bd", 
+                               "#d53e4f"))+
+  labs(fill="Incidencia", title= "glm - Marea Alta")
+
+glm_Baja_predict_raw=predict(glm_Logit_mod_fit, newdata=Baja_data_variables, type="raw")
+glm_Baja_predict_df_raw<-as.data.frame(glm_Baja_predict_raw)
+glm_Baja_raw<-cbind(Temperatura_Baja$x, Temperatura_Baja$y, glm_Baja_predict_df_raw )
+colnames(glm_Baja_raw)<-c("Longitud","Latitud", "Presencia")
+rasterPrediccion_raw<-rasterFromXYZ(glm_Baja_raw)
+plot(rasterPrediccion_raw)
+
+glm_MB_raw<-ggplot(glm_Baja_raw, aes(Longitud, Latitud)) +
+  geom_tile(aes(fill = Presencia))+
+  geom_polygon(data=costa, aes(x= long, y= lat, group=group), colour="#38a800", fill="#38a800") +
+  #geom_polygon(data=rios, aes(x= long, y= lat, group=group), colour="#bcebfb", fill="#bcebfb") +
+  coord_sf(xlim = c(-78.595484615, -78.053463218), ylim = c(2.339426503 , 3.162306176), expand = FALSE)+   
+  geom_polygon(data=areas_protegidas, aes(x= long, y= lat, group=group), colour="red", fill="transparent", linewidth=1) +
+  theme(panel.background = element_rect(fill = '#bfe8ff', color="#737373"),
+        panel.grid.major = element_line(color = '#252525', linetype = 'dotted'))+
+  scale_fill_manual(values = c("#3288bd", 
+                               "#d53e4f"))+
+  labs(fill="Incidencia", title= "glm - Marea Baja")
+
+png(filename = "./Imagenes/Incidencia_ML.png", res = 300, width = 15, height = 20, units = "cm", pointsize = 13)
+
+ggarrange( glm_MA_raw, glm_MB_raw,rf_MA_raw, rf_MB_raw, ncol =  2, nrow = 2,common.legend = TRUE, legend ="bottom")
+dev.off()

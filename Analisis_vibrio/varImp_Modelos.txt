@@ -1,0 +1,32 @@
+[1] "RF_varImp"
+rf variable importance
+
+             Overall
+Salinidad    100.000
+Temperatura   89.096
+Clorofila      4.683
+DensidadFito   0.000
+[1] "svm_varImp"
+ROC curve variable importance
+
+             Importance
+Salinidad           100
+Temperatura          40
+DensidadFito         20
+Clorofila             0
+[1] "glm_varImp"
+glm variable importance
+
+             Overall
+Temperatura   100.00
+Clorofila      91.24
+Salinidad      15.96
+DensidadFito    0.00
+[1] "knn_varImp"
+ROC curve variable importance
+
+             Importance
+Salinidad           100
+Temperatura          40
+DensidadFito         20
+Clorofila             0
