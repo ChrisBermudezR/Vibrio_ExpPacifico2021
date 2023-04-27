@@ -16,6 +16,14 @@ source("./Funciones/modelosEval_Factor.R")
 vibrio=read.csv("VibrioTotal.csv")
 
 
+
+
+
+
+
+
+
+
 colnames(vibrio)
 
 vibrioData<-vibrio$Vibrio

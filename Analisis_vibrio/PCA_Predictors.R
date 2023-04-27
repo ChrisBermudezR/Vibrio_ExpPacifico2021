@@ -15,10 +15,25 @@ library(ggplot2)
 library(factoextra)
 library(corrplot)
 library(usethis)
+library(RColorBrewer)
 vibrio=read.csv("VibrioTotal.csv")
 
-####Pacific####
 
+
+
+#Correlación multiple
+mul_correlacion<-stats::cor(na.omit(vibrio[,6:22]),  method = c("spearman") )
+png(filename = "./Imagenes/corr_Matrix.png", res = 300, width = 12, height = 12, units = "cm", pointsize = 5, type = c("cairo"))
+
+corrplot::corrplot(mul_correlacion, 
+                   method = 'number',
+                   type="upper", 
+                   title=title,  
+                   sig.level = 0.01, 
+                   insig = "blank", 
+                   col=brewer.pal(n=8, name="RdYlBu"), 
+                   tl.col="black", tl.srt=45, mar=c(0,0,1,0) )
+dev.off()
 
 #Calcular los componentes principales
 Pac_data_pca <- stats::prcomp(na.omit(vibrio[,6:22]), scale = TRUE)
