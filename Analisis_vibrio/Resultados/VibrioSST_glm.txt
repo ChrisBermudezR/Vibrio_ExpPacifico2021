@@ -4,31 +4,31 @@ Call:  glm(formula = Factor ~ variable, family = binomial)
 
 Coefficients:
 (Intercept)     variable  
-    2.51866     -0.01524  
+    2.77163     -0.01764  
 
-Degrees of Freedom: 23 Total (i.e. Null);  22 Residual
-Null Deviance:	    21.63 
-Residual Deviance: 19.73 	AIC: 23.73
+Degrees of Freedom: 17 Total (i.e. Null);  16 Residual
+Null Deviance:	    16.22 
+Residual Deviance: 13.92 	AIC: 17.92
 
 Call:
 glm(formula = Factor ~ variable, family = binomial)
 
 Deviance Residuals: 
     Min       1Q   Median       3Q      Max  
--2.1070   0.4606   0.4809   0.5418   1.1501  
+-2.1858   0.4162   0.4332   0.5190   1.2066  
 
 Coefficients:
-            Estimate Std. Error z value Pr(>|z|)   
-(Intercept)  2.51866    0.92888   2.711   0.0067 **
-variable    -0.01524    0.01101  -1.385   0.1660   
+            Estimate Std. Error z value Pr(>|z|)  
+(Intercept)  2.77163    1.12402   2.466   0.0137 *
+variable    -0.01764    0.01189  -1.484   0.1379  
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 21.627  on 23  degrees of freedom
-Residual deviance: 19.726  on 22  degrees of freedom
-AIC: 23.726
+    Null deviance: 16.220  on 17  degrees of freedom
+Residual deviance: 13.923  on 16  degrees of freedom
+AIC: 17.923
 
 Number of Fisher Scoring iterations: 4
 

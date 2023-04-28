@@ -2,31 +2,31 @@
 rf variable importance
 
              Overall
-Salinidad    100.000
-Temperatura   89.096
-Clorofila      4.683
-DensidadFito   0.000
+Salinidad     100.00
+Temperatura    39.82
+Clorofila      33.87
+DensidadFito    0.00
 [1] "svm_varImp"
 ROC curve variable importance
 
              Importance
-Salinidad           100
-Temperatura          40
-DensidadFito         20
-Clorofila             0
+Salinidad        100.00
+Clorofila         56.25
+Temperatura       25.00
+DensidadFito       0.00
 [1] "glm_varImp"
 glm variable importance
 
              Overall
-Temperatura   100.00
-Clorofila      91.24
-Salinidad      15.96
-DensidadFito    0.00
+Salinidad     100.00
+Clorofila      37.51
+DensidadFito   28.34
+Temperatura     0.00
 [1] "knn_varImp"
 ROC curve variable importance
 
              Importance
-Salinidad           100
-Temperatura          40
-DensidadFito         20
-Clorofila             0
+Salinidad        100.00
+Clorofila         56.25
+Temperatura       25.00
+DensidadFito       0.00

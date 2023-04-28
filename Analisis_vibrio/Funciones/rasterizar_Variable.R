@@ -11,7 +11,7 @@ assign(paste0(nombre_variable,"_",marea,"_plot"), ggplot(pts.grid, aes(Longitud,
     geom_raster(aes(fill = variable))+
     geom_polygon(data=costa, aes(x= long, y= lat, group=group), colour="#3aaa05", fill="#3aaa05") +
     geom_polygon(data=rios, aes(x= long, y= lat, group=group), colour="#bcebfb", fill="#bcebfb") +
-    coord_sf(xlim = c(min(longitud), max(longitud)), ylim = c(min(latitud), max(latitud)), expand = FALSE)+   
+    coord_sf(xlim = c(-78.405, -78.216), ylim = c(2.621, 2.855), expand = FALSE)+   
     geom_polygon(data=areas_protegidas, aes(x= long, y= lat, group=group), colour="red", fill="transparent") +
     theme_bw()+
     scale_fill_gradientn(colours = c("#2166ac", "#67a9cf", "#d1e5f0", "#f7f7f7", "#fddbc7", "#ef8a62", "#b2182b"))+

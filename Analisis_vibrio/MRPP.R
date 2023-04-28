@@ -2,13 +2,16 @@ install.packages("vegan")
 
 library(vegan)
 
-MRPP_PCA=read.csv("MRPP_PCA.csv")
+MRPP_PCA=read.csv("Datos_Raster.csv")
 
-
-Marea <- MRPP_PCA$Marea
+MRPP_PCA$MareaFactor<-as.factor(MRPP_PCA$MareaFactor)
+Marea <- MRPP_PCA$MareaFactor
 Sector <- MRPP_PCA$Sector
 Transecto <- MRPP_PCA$Transecto
 
-mrpp_resultMarea <- mrpp(MRPP_PCA[, -1:-4], Marea)
-mrpp_resultSector <- mrpp(MRPP_PCA[, -1:-4], Sector)
-mrpp_resultTransecto <- mrpp(MRPP_PCA[, -1:-4], Transecto)
+mrpp_resultMarea <- mrpp(MRPP_PCA[, -1:-5], Marea)
+capture.output("Resultados MRPP MArea",
+               mrpp_resultMarea,
+               file="Resultados_MRPP.txt"
+  
+)

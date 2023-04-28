@@ -3,11 +3,15 @@ library(pROC)
 library(caret)
 
 source("./Funciones/rasterizar_Variable.R")
+source("./Funciones/modelosEval_Factor.R")
 library(raster)
 library(rgdal)
 library(oce)
 library(dplyr)
 library(ggpubr)
+library(pROC) #glm
+library(randomForest) #Random forest
+library(e1071)
 ############### SVM 
 VibrioData=read.csv("VibrioTotal.csv")
 
@@ -26,7 +30,7 @@ head(VibrioData)
 
 
 
-set.seed(10000) #pseudo-repeatability
+set.seed(750) #pseudo-repeatability
 trainIndex = caret::createDataPartition(VibrioData$Vibrio, p = .75, 
                                  list = FALSE, 
                                  times = 1) #y as basis of splitting
@@ -115,7 +119,7 @@ confusionMatrix(predict(svmRadialSigma_mod_fit, newdata=testing), testing$Vibrio
 confusionMatrix(predict(glm_Logit_mod_fit, newdata=testing), testing$Vibrio)$overall[1]
 confusionMatrix(predict(knn_mod_fit, newdata=testing), testing$Vibrio)$overall[1]
 
-
+png(filename = "./Imagenes/AUC_ML.png", res = 300, width = 20, height = 20, units = "cm", pointsize = 13)
 
 roc(testing[,"Vibrio"], 
     glm_Logit_mod_fit_predict, 
@@ -128,7 +132,7 @@ roc(testing[,"Vibrio"],
     lwd=4,
     print.auc=TRUE,
     print.auc.x=45,
-    main= "Gráfica")
+    main= "AUC")
 
 plot.roc(testing[,"Vibrio"], 
          rf_mod_fit_predict,
@@ -162,7 +166,7 @@ plot.roc(testing[,"Vibrio"],
 
 legend("bottomright", legend=c("Regr. Logistica", "Random Forest", "SVM", "KNN"), col=c("#a6cee3", "#1f78b4", "#b2df8a", "red"), lwd=4)
 par(pty = "m")
-
+dev.off()
 
 ###############################
 
@@ -311,10 +315,10 @@ DensidadFito_Baja<-as.data.frame(DensidadFito_Baja.tif, xy=TRUE)
 Clorofila_Alta<-as.data.frame(Clorofila_Alta.tif, xy=TRUE)
 Clorofila_Baja<-as.data.frame(Clorofila_Baja.tif, xy=TRUE)
 
-Alta_data_variables<-cbind(Temperatura_Alta$Temperatura_Alta,Salinidad_Alta$Salinidad_Alta, DensidadFito_Alta$DensidadFito_Alta, Clorofila_Alta$Clorofila_Alta)
+Alta_data_variables<-cbind(Temperatura_Alta$layer,Salinidad_Alta$layer, DensidadFito_Alta$layer, Clorofila_Alta$layer)
 colnames(Alta_data_variables)<-c("Temperatura", "Salinidad", "DensidadFito", "Clorofila")
 
-Baja_data_variables<-cbind(Temperatura_Baja$Temperatura_Baja,Salinidad_Baja$Salinidad_Baja, DensidadFito_Baja$DensidadFito_Baja, Clorofila_Baja$Clorofila_Baja)
+Baja_data_variables<-cbind(Temperatura_Baja$layer,Salinidad_Baja$layer, DensidadFito_Baja$layer, Clorofila_Baja$layer)
 colnames(Baja_data_variables)<-c("Temperatura", "Salinidad","DensidadFito", "Clorofila")
 
 ######Probabilidad
@@ -419,9 +423,9 @@ glm_MB_prob<-ggplot(glm_Baja, aes(Longitud, Latitud)) +
                                    "#d53e4f"))+
   labs(fill="Probabilidad", title= "glm - Marea Baja")
 
-png(filename = "./Imagenes/Probabilidad_ML.png", res = 300, width = 15, height = 20, units = "cm", pointsize = 13)
+png(filename = "./Imagenes/Probabilidad_ML.png", res = 300, width = 18, height = 24, units = "cm", pointsize = 13)
 
-ggarrange( glm_MA_prob, glm_MB_prob,rf_MA_prob, rf_MB_prob, ncol =  2, nrow = 2,common.legend = TRUE, legend ="bottom")
+ggarrange( glm_MA_prob, glm_MB_prob,rf_MA_prob, rf_MB_prob, ncol =  2, nrow = 2,common.legend = F, legend ="bottom")
 dev.off()
 
 
@@ -429,8 +433,8 @@ dev.off()
 
 ######Presencia####
 rf_Alta_predict_raw=predict(rf_mod_fit, newdata=Alta_data_variables, type="raw") #Se puede predecir con distribución probabilistica predict (type="prob") o categórica (type="raw")
-rf_Alta_predict_df_raw<-as.data.frame(rf_Alta_predict)
-rf_Alta_raw<-cbind(Temperatura_Alta$x, Temperatura_Alta$y, rf_Alta_predict_df )
+rf_Alta_predict_df_raw<-as.data.frame(rf_Alta_predict_raw)
+rf_Alta_raw<-cbind(Temperatura_Alta$x, Temperatura_Alta$y, rf_Alta_predict_df_raw )
 colnames(rf_Alta_raw)<-c("Longitud","Latitud", "Presencia")
 rf_Alta_rasterPrediccion_raw<-rasterFromXYZ(rf_Alta_raw)
 plot(rf_Alta_rasterPrediccion_raw)
@@ -484,7 +488,7 @@ glm_MA_raw<-ggplot(glm_Alta_raw, aes(Longitud, Latitud)) +
   geom_polygon(data=areas_protegidas, aes(x= long, y= lat, group=group), colour="red", fill="transparent", linewidth=1) +
   theme(panel.background = element_rect(fill = '#bfe8ff', color="#737373"),
         panel.grid.major = element_line(color = '#252525', linetype = 'dotted'))+
-  scale_fill_manual(values = c("#3288bd", 
+  scale_fill_manual(values = c("#d53e4f", 
                                "#d53e4f"))+
   labs(fill="Incidencia", title= "glm - Marea Alta")
 
@@ -507,7 +511,7 @@ glm_MB_raw<-ggplot(glm_Baja_raw, aes(Longitud, Latitud)) +
                                "#d53e4f"))+
   labs(fill="Incidencia", title= "glm - Marea Baja")
 
-png(filename = "./Imagenes/Incidencia_ML.png", res = 300, width = 15, height = 20, units = "cm", pointsize = 13)
+png(filename = "./Imagenes/Incidencia_ML.png", res = 300, width = 18, height = 24, units = "cm", pointsize = 13)
 
-ggarrange( glm_MA_raw, glm_MB_raw,rf_MA_raw, rf_MB_raw, ncol =  2, nrow = 2,common.legend = TRUE, legend ="bottom")
+ggarrange( glm_MA_raw, glm_MB_raw,rf_MA_raw, rf_MB_raw, ncol =  2, nrow = 2,common.legend = FALSE, legend ="bottom")
 dev.off()

@@ -1,0 +1,21 @@
+[1] "Resultados MRPP MArea"
+
+Call:
+mrpp(dat = MRPP_PCA[, -1:-5], grouping = Marea) 
+
+Dissimilarity index: euclidean 
+Weights for groups:  n 
+
+Class means and counts:
+
+      0     1    
+delta  3669  7007
+n     18    18   
+
+Chance corrected within-group agreement A: 0.0163 
+Based on observed delta 5338 and expected delta 5427 
+
+Significance of delta: 0.154 
+Permutation: free
+Number of permutations: 999
+
