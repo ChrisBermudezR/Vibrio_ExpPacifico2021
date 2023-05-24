@@ -58,9 +58,9 @@ write.table(Pac_Comp_var, "Pac_PCA.csv", dec = ".", sep=",", row.names = FALSE)
 ######Gráficas de los componentes principales#####
 
 Pac_var <-get_pca_var(Pac_data_pca)
-#Gráfica de correlación entre lasvariables y los componentes
-Pac_var_percentages<-as.data.frame(Pac_var$cos2)
-colnames(Pac_var_percentages)<-c("PC01", "PC02", 
+
+Pac_var_Correlaciones<-as.data.frame(Pac_var$cor)
+colnames(Pac_var_Correlaciones)<-c("PC01", "PC02", 
                       "PC03", "PC04", 
                       "PC05", "PC06", 
                       "PC07","PC08", 
@@ -69,7 +69,22 @@ colnames(Pac_var_percentages)<-c("PC01", "PC02",
                       "PC13"
                       
 )
-write.table(Pac_var_percentages, "aportes.csv", dec = ".", sep=",")
+write.table(Pac_var_Correlaciones, "Pac_var_Correlaciones.csv", dec = ".", sep=",")
+
+#Contribuciones de cada variable
+Pac_var_contribucion<-as.data.frame(Pac_var$contrib)
+colnames(Pac_var_contribucion)<-c("PC01", "PC02", 
+                                 "PC03", "PC04", 
+                                 "PC05", "PC06", 
+                                 "PC07","PC08", 
+                                 "PC09", "PC10", 
+                                 "PC11", "PC12", 
+                                 "PC13"
+                                 
+)
+write.table(Pac_var_contribucion, "PCA_var_contribucion.csv", dec = ".", sep=",")
+
+
 
 png(filename = "./Imagenes/Pac_PCA_Dim.png",width = 20, height = 20, units = "cm", res=300, pointsize = 0.1)
 corrplot(Pac_var$cor, is.corr=TRUE)
@@ -78,7 +93,7 @@ dev.off()
 
 
 Pac_graf01<-factoextra::fviz_eig(Pac_data_pca,addlabels = TRUE,hjust = -0.3,linecolor ="red")+
-  labs(title="Screeplot",x="Dimensiones (PC)", y="% variable explicado.")+
+  labs(title="Gráfico de Sedimentación",x="Dimensiones (PC)", y="% variable explicado.")+
   ylim(c(0,65))
 
 

@@ -1,0 +1,3 @@
+.RData
+
+#git rm --cached .RData

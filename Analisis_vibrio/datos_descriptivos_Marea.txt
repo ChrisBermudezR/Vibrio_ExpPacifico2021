@@ -1,0 +1,268 @@
+[1] "#######################Marea Alta"
+    Var1          Var2               Freq
+1             Estacion Length:18         
+2             Estacion Class :character  
+3             Estacion Mode  :character  
+4             Estacion               <NA>
+5             Estacion               <NA>
+6             Estacion               <NA>
+7             Latitude    Min.   :2.621  
+8             Latitude    1st Qu.:2.691  
+9             Latitude    Median :2.743  
+10            Latitude    Mean   :2.741  
+11            Latitude    3rd Qu.:2.784  
+12            Latitude    Max.   :2.849  
+13           Longitude   Min.   :-78.40  
+14           Longitude   1st Qu.:-78.40  
+15           Longitude   Median :-78.32  
+16           Longitude   Mean   :-78.31  
+17           Longitude   3rd Qu.:-78.22  
+18           Longitude   Max.   :-78.22  
+19         MareaFactor        Min.   :1  
+20         MareaFactor        1st Qu.:1  
+21         MareaFactor        Median :1  
+22         MareaFactor        Mean   :1  
+23         MareaFactor        3rd Qu.:1  
+24         MareaFactor        Max.   :1  
+25              Vibrio Length:18         
+26              Vibrio Class :character  
+27              Vibrio Mode  :character  
+28              Vibrio               <NA>
+29              Vibrio               <NA>
+30              Vibrio               <NA>
+31                 NO2   Min.   :0.0500  
+32                 NO2   1st Qu.:0.0625  
+33                 NO2   Median :0.1050  
+34                 NO2   Mean   :0.1856  
+35                 NO2   3rd Qu.:0.1500  
+36                 NO2   Max.   :0.7700  
+37                 NO3   Min.   :0.2700  
+38                 NO3   1st Qu.:0.4850  
+39                 NO3   Median :0.7000  
+40                 NO3   Mean   :0.8717  
+41                 NO3   3rd Qu.:1.1450  
+42                 NO3   Max.   :2.2800  
+43                 PO4   Min.   :0.0600  
+44                 PO4   1st Qu.:0.1300  
+45                 PO4   Median :0.1900  
+46                 PO4   Mean   :0.1972  
+47                 PO4   3rd Qu.:0.2475  
+48                 PO4   Max.   :0.4200  
+49                SiO2    Min.   : 3.51  
+50                SiO2    1st Qu.: 9.75  
+51                SiO2    Median :11.49  
+52                SiO2    Mean   :14.55  
+53                SiO2    3rd Qu.:16.28  
+54                SiO2    Max.   :44.44  
+55           Clorofila    Min.   :0.320  
+56           Clorofila    1st Qu.:0.700  
+57           Clorofila    Median :0.770  
+58           Clorofila    Mean   :1.021  
+59           Clorofila    3rd Qu.:1.018  
+60           Clorofila    Max.   :4.600  
+61                  pH    Min.   :8.030  
+62                  pH    1st Qu.:8.160  
+63                  pH    Median :8.200  
+64                  pH    Mean   :8.191  
+65                  pH    3rd Qu.:8.227  
+66                  pH    Max.   :8.290  
+67                  OD    Min.   :6.120  
+68                  OD    1st Qu.:6.795  
+69                  OD    Median :7.240  
+70                  OD    Mean   :7.167  
+71                  OD    3rd Qu.:7.617  
+72                  OD    Max.   :8.060  
+73       Transparencia   Min.   : 0.600  
+74       Transparencia   1st Qu.: 1.975  
+75       Transparencia   Median : 2.500  
+76       Transparencia   Mean   : 4.367  
+77       Transparencia   3rd Qu.: 6.000  
+78       Transparencia   Max.   :13.000  
+79                 SST   Min.   : 16.30  
+80                 SST   1st Qu.: 22.04  
+81                 SST   Median : 24.98  
+82                 SST   Mean   : 38.04  
+83                 SST   3rd Qu.: 37.05  
+84                 SST   Max.   :160.97  
+85         Temperatura    Min.   :24.67  
+86         Temperatura    1st Qu.:26.80  
+87         Temperatura    Median :27.16  
+88         Temperatura    Mean   :27.02  
+89         Temperatura    3rd Qu.:27.58  
+90         Temperatura    Max.   :27.91  
+91           Salinidad   Min.   : 7.195  
+92           Salinidad   1st Qu.:22.725  
+93           Salinidad   Median :26.383  
+94           Salinidad   Mean   :23.456  
+95           Salinidad   3rd Qu.:28.223  
+96           Salinidad   Max.   :29.474  
+97            Densidad     Min.   :1003  
+98            Densidad     1st Qu.:1014  
+99            Densidad     Median :1016  
+100           Densidad     Mean   :1014  
+101           Densidad     3rd Qu.:1018  
+102           Densidad     Max.   :1018  
+103       DensidadFito    Min.   :  360  
+104       DensidadFito    1st Qu.: 1148  
+105       DensidadFito    Median : 2192  
+106       DensidadFito    Mean   : 5292  
+107       DensidadFito    3rd Qu.: 5677  
+108       DensidadFito    Max.   :29298  
+109         PesoHum500  Min.   :  17.56  
+110         PesoHum500  1st Qu.:  58.74  
+111         PesoHum500  Median : 194.61  
+112         PesoHum500  Mean   : 281.21  
+113         PesoHum500  3rd Qu.: 287.24  
+114         PesoHum500  Max.   :1913.18  
+115         PesoHum300  Min.   :  75.95  
+116         PesoHum300  1st Qu.: 264.10  
+117         PesoHum300  Median : 518.93  
+118         PesoHum300  Mean   : 680.68  
+119         PesoHum300  3rd Qu.: 851.78  
+120         PesoHum300  Max.   :3070.97  
+121                 q0    Min.   : 8.00  
+122                 q0    1st Qu.:16.00  
+123                 q0    Median :24.50  
+124                 q0    Mean   :24.00  
+125                 q0    3rd Qu.:29.75  
+126                 q0    Max.   :42.00  
+127                 q1   Min.   : 2.495  
+128                 q1   1st Qu.: 6.234  
+129                 q1   Median : 8.537  
+130                 q1   Mean   : 9.674  
+131                 q1   3rd Qu.:11.644  
+132                 q1   Max.   :21.415  
+[1] "#####################Marea Alta"
+    Var1          Var2               Freq
+1             Estacion Length:18         
+2             Estacion Class :character  
+3             Estacion Mode  :character  
+4             Estacion               <NA>
+5             Estacion               <NA>
+6             Estacion               <NA>
+7             Latitude    Min.   :2.621  
+8             Latitude    1st Qu.:2.691  
+9             Latitude    Median :2.743  
+10            Latitude    Mean   :2.741  
+11            Latitude    3rd Qu.:2.784  
+12            Latitude    Max.   :2.849  
+13           Longitude   Min.   :-78.40  
+14           Longitude   1st Qu.:-78.40  
+15           Longitude   Median :-78.32  
+16           Longitude   Mean   :-78.31  
+17           Longitude   3rd Qu.:-78.22  
+18           Longitude   Max.   :-78.22  
+19         MareaFactor        Min.   :0  
+20         MareaFactor        1st Qu.:0  
+21         MareaFactor        Median :0  
+22         MareaFactor        Mean   :0  
+23         MareaFactor        3rd Qu.:0  
+24         MareaFactor        Max.   :0  
+25              Vibrio Length:18         
+26              Vibrio Class :character  
+27              Vibrio Mode  :character  
+28              Vibrio               <NA>
+29              Vibrio               <NA>
+30              Vibrio               <NA>
+31                 NO2   Min.   :0.0600  
+32                 NO2   1st Qu.:0.2400  
+33                 NO2   Median :0.3500  
+34                 NO2   Mean   :0.4206  
+35                 NO2   3rd Qu.:0.6200  
+36                 NO2   Max.   :0.9200  
+37                 NO3    Min.   :0.190  
+38                 NO3    1st Qu.:1.000  
+39                 NO3    Median :1.225  
+40                 NO3    Mean   :1.716  
+41                 NO3    3rd Qu.:2.165  
+42                 NO3    Max.   :4.310  
+43                 PO4   Min.   :0.0600  
+44                 PO4   1st Qu.:0.1475  
+45                 PO4   Median :0.3250  
+46                 PO4   Mean   :0.3083  
+47                 PO4   3rd Qu.:0.3575  
+48                 PO4   Max.   :0.9100  
+49                SiO2    Min.   : 6.86  
+50                SiO2    1st Qu.:19.95  
+51                SiO2    Median :27.64  
+52                SiO2    Mean   :34.50  
+53                SiO2    3rd Qu.:44.32  
+54                SiO2    Max.   :78.47  
+55           Clorofila    Min.   :0.810  
+56           Clorofila    1st Qu.:1.350  
+57           Clorofila    Median :1.570  
+58           Clorofila    Mean   :2.031  
+59           Clorofila    3rd Qu.:2.257  
+60           Clorofila    Max.   :4.990  
+61                  pH    Min.   :7.870  
+62                  pH    1st Qu.:8.055  
+63                  pH    Median :8.165  
+64                  pH    Mean   :8.128  
+65                  pH    3rd Qu.:8.215  
+66                  pH    Max.   :8.250  
+67                  OD    Min.   :5.410  
+68                  OD    1st Qu.:6.085  
+69                  OD    Median :6.435  
+70                  OD    Mean   :6.519  
+71                  OD    3rd Qu.:7.020  
+72                  OD    Max.   :7.600  
+73       Transparencia    Min.   :0.600  
+74       Transparencia    1st Qu.:0.925  
+75       Transparencia    Median :1.350  
+76       Transparencia    Mean   :2.336  
+77       Transparencia    3rd Qu.:2.375  
+78       Transparencia    Max.   :8.500  
+79                 SST   Min.   : 14.67  
+80                 SST   1st Qu.: 28.07  
+81                 SST   Median : 35.88  
+82                 SST   Mean   : 48.73  
+83                 SST   3rd Qu.: 50.26  
+84                 SST   Max.   :188.05  
+85         Temperatura    Min.   :25.47  
+86         Temperatura    1st Qu.:26.90  
+87         Temperatura    Median :27.26  
+88         Temperatura    Mean   :27.36  
+89         Temperatura    3rd Qu.:27.85  
+90         Temperatura    Max.   :30.02  
+91           Salinidad  Min.   : 0.3501  
+92           Salinidad  1st Qu.:12.1656  
+93           Salinidad  Median :18.6240  
+94           Salinidad  Mean   :17.0694  
+95           Salinidad  3rd Qu.:25.8459  
+96           Salinidad  Max.   :30.1194  
+97            Densidad     Min.   : 997  
+98            Densidad     1st Qu.:1006  
+99            Densidad     Median :1010  
+100           Densidad     Mean   :1009  
+101           Densidad     3rd Qu.:1015  
+102           Densidad     Max.   :1019  
+103       DensidadFito    Min.   :  760  
+104       DensidadFito    1st Qu.: 2836  
+105       DensidadFito    Median : 4406  
+106       DensidadFito    Mean   : 4879  
+107       DensidadFito    3rd Qu.: 6140  
+108       DensidadFito    Max.   :14414  
+109         PesoHum500 Min.   :  0.5078  
+110         PesoHum500 1st Qu.:  7.9628  
+111         PesoHum500 Median : 29.1491  
+112         PesoHum500 Mean   : 63.9584  
+113         PesoHum500 3rd Qu.: 53.2069  
+114         PesoHum500 Max.   :580.9613  
+115         PesoHum300  Min.   :  18.94  
+116         PesoHum300  1st Qu.: 265.69  
+117         PesoHum300  Median : 689.79  
+118         PesoHum300  Mean   : 633.80  
+119         PesoHum300  3rd Qu.: 902.19  
+120         PesoHum300  Max.   :1772.80  
+121                 q0    Min.   :12.00  
+122                 q0    1st Qu.:21.00  
+123                 q0    Median :25.50  
+124                 q0    Mean   :27.50  
+125                 q0    3rd Qu.:34.25  
+126                 q0    Max.   :49.00  
+127                 q1   Min.   : 2.301  
+128                 q1   1st Qu.: 7.685  
+129                 q1   Median : 9.654  
+130                 q1   Mean   : 9.694  
+131                 q1   3rd Qu.:12.062  
+132                 q1   Max.   :16.556  

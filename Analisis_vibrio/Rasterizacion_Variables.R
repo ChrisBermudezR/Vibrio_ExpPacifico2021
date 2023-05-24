@@ -4,6 +4,40 @@ library(oce)
 Datos_Raster=read.csv("Datos_Raster.csv")
 
 
+datos_descriptivos_Alta<-as.data.frame(summary(Datos_Raster[Datos_Raster$MareaFactor == 1,]))
+datos_descriptivos_Baja<-as.data.frame(summary(Datos_Raster[Datos_Raster$MareaFactor == 0,]))
+capture.output("#######################Marea Alta", datos_descriptivos_Alta,"#####################Marea Alta", datos_descriptivos_Baja, file = "datos_descriptivos_Marea.txt")
+
+
+Alta=Datos_Raster[Datos_Raster$MareaFactor==1,]
+Baja=Datos_Raster[Datos_Raster$MareaFactor==0,]
+
+
+
+wilcox.test(Alta$NO2,Baja$NO2 )
+wilcox.test(Alta$NO3,Baja$NO3 )
+wilcox.test(Alta$PO4,Baja$PO4 )
+wilcox.test(Alta$SiO2,Baja$SiO2 )
+wilcox.test(Alta$Clorofila,Baja$Clorofila )
+wilcox.test(Alta$pH,Baja$pH )
+wilcox.test(Alta$OD,Baja$OD )
+wilcox.test(Alta$Transparencia,Baja$Transparencia )
+wilcox.test(Alta$SST,Baja$SST )
+wilcox.test(Alta$Temperatura,Baja$Temperatura )
+wilcox.test(Alta$Salinidad,Baja$Salinidad )
+wilcox.test(Alta$Densidad,Baja$Densidad )
+wilcox.test(Alta$PesoHum500,Baja$PesoHum500 )
+wilcox.test(Alta$DensidadFito,Baja$DensidadFito )
+wilcox.test(Alta$PesoHum300,Baja$PesoHum300 )
+wilcox.test(Alta$q0,Baja$q0 )
+wilcox.test(Alta$q1,Baja$q1 )
+
+
+
+
+
+
+
 
 
 costa<-rgdal::readOGR("./SIG_Datos/costa.shp")
@@ -61,8 +95,8 @@ rasterizar_Variable("NO3", Datos_Raster_baja$Longitude, Datos_Raster_baja$Latitu
 rasterizar_Variable("PO4", Datos_Raster_alta$Longitude, Datos_Raster_alta$Latitude, Datos_Raster_alta$PO4, "Alta", Exp_PO4, Datos_Raster)
 rasterizar_Variable("PO4", Datos_Raster_baja$Longitude, Datos_Raster_baja$Latitude, Datos_Raster_baja$PO4, "Baja",Exp_PO4, Datos_Raster)
 
-rasterizar_Variable("SiO2", Datos_Raster_alta$Longitude, Datos_Raster_alta$Latitude, Datos_Raster_alta$PO4, "Alta", Exp_SiO2, Datos_Raster)
-rasterizar_Variable("SiO2", Datos_Raster_baja$Longitude, Datos_Raster_baja$Latitude, Datos_Raster_baja$PO4, "Baja",Exp_SiO2, Datos_Raster)
+rasterizar_Variable("SiO2", Datos_Raster_alta$Longitude, Datos_Raster_alta$Latitude, Datos_Raster_alta$SiO2, "Alta", Exp_SiO2, Datos_Raster)
+rasterizar_Variable("SiO2", Datos_Raster_baja$Longitude, Datos_Raster_baja$Latitude, Datos_Raster_baja$SiO2, "Baja",Exp_SiO2, Datos_Raster)
 
 
 rasterizar_Variable("pH", Datos_Raster_alta$Longitude, Datos_Raster_alta$Latitude, Datos_Raster_alta$pH, "Alta", "pH   ", Datos_Raster)

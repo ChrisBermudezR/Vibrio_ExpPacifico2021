@@ -1,32 +1,48 @@
 [1] "RF_varImp"
 rf variable importance
 
-             Overall
-Salinidad     100.00
-Temperatura    39.82
-Clorofila      33.87
-DensidadFito    0.00
+              Overall
+Salinidad      100.00
+Temperatura     61.13
+NO3             48.98
+PesoHum300      35.27
+SST             32.81
+NO2             30.20
+q1              29.91
+Transparencia    0.00
 [1] "svm_varImp"
 ROC curve variable importance
 
-             Importance
-Salinidad        100.00
-Clorofila         56.25
-Temperatura       25.00
-DensidadFito       0.00
+              Importance
+Salinidad        100.000
+SST               45.455
+Temperatura       45.455
+NO2               36.364
+NO3               18.182
+Transparencia      9.091
+q1                 0.000
+PesoHum300         0.000
 [1] "glm_varImp"
 glm variable importance
 
-             Overall
-Salinidad     100.00
-Clorofila      37.51
-DensidadFito   28.34
-Temperatura     0.00
+              Overall
+Temperatura   100.000
+Salinidad      98.470
+Transparencia  24.809
+NO3            19.587
+PesoHum300     19.076
+SST            15.230
+NO2             4.726
+q1              0.000
 [1] "knn_varImp"
 ROC curve variable importance
 
-             Importance
-Salinidad        100.00
-Clorofila         56.25
-Temperatura       25.00
-DensidadFito       0.00
+              Importance
+Salinidad        100.000
+SST               45.455
+Temperatura       45.455
+NO2               36.364
+NO3               18.182
+Transparencia      9.091
+PesoHum300         0.000
+q1                 0.000

@@ -1,9 +1,8 @@
 #######################################################################
+install.packages("pROC")
+
 library(pROC)
 library(caret)
-
-source("./Funciones/rasterizar_Variable.R")
-source("./Funciones/modelosEval_Factor.R")
 library(raster)
 library(rgdal)
 library(oce)
@@ -12,14 +11,18 @@ library(ggpubr)
 library(pROC) #glm
 library(randomForest) #Random forest
 library(e1071)
+
+#Funciones
+source("./Funciones/rasterizar_Variable.R")
+source("./Funciones/modelosEval_Factor.R")
+
 ############### SVM 
 VibrioData=read.csv("VibrioTotal.csv")
+VibrioDataPCA<-VibrioData[,c(23:25)]
+VibrioData<-VibrioData[,c(5:16,18:22)]
 
-
-VibrioData<-VibrioData[,c(5:16,18:25)]
-
-
-
+VibrioData<-VibrioData %>% 
+    select(Vibrio, NO2, NO3, SST, Transparencia, Temperatura, Salinidad, PesoHum300 , q1)
 
 #VibrioData=na.omit(VibrioData)
 
@@ -27,8 +30,6 @@ summary(VibrioData)
 head(VibrioData)
 
 ############################
-
-
 
 set.seed(750) #pseudo-repeatability
 trainIndex = caret::createDataPartition(VibrioData$Vibrio, p = .75, 
@@ -41,11 +42,6 @@ testing= VibrioData[-trainIndex,] #25% for model testing
 training$Vibrio<-as.factor(training$Vibrio)
 testing$Vibrio<-as.factor(testing$Vibrio)
 
-
-
-
-
-
 ## caret
 # define training control--> 10fold cv
 train_control = trainControl(method="cv", 
@@ -54,20 +50,19 @@ train_control = trainControl(method="cv",
 
 #methods: svmRadial rf  family=binomial(logit)
 
-
 #svm with rbf kernel
-rf_mod_fit=train(Vibrio~ Salinidad + Temperatura + DensidadFito + Clorofila,
+rf_mod_fit=train(Vibrio~ .,
                data=training,trControl=train_control,method="rf")
 
-svmRadialSigma_mod_fit=train(Vibrio~ Salinidad + Temperatura + DensidadFito + Clorofila,
+svmRadialSigma_mod_fit=train(Vibrio~ .,
                data=training,trControl=train_control,method="svmRadialSigma")
 
 
-glm_Logit_mod_fit=train(Vibrio~ Salinidad + Temperatura + DensidadFito + Clorofila,
+glm_Logit_mod_fit=train(Vibrio~ .,
                data=training,trControl=train_control,method="glm", family = "binomial")
 
 set.seed (1)
-knn_mod_fit=train(Vibrio~  Salinidad + Temperatura + DensidadFito + Clorofila, 
+knn_mod_fit=train(Vibrio~  ., 
                   data=training,trControl=train_control,method="knn")
 
 
@@ -95,6 +90,39 @@ glm_varImp<-varImp(glm_Logit_mod_fit)
 knn_varImp<-varImp(knn_mod_fit)
 
 
+
+
+RF_varImpPlot<-ggplot(data= RF_varImp, aes(x=rownames(RF_varImp),y=Overall)) +
+  geom_bar(position="dodge",stat="identity",width = 0, color = "black") + 
+  coord_flip() + geom_point(color='skyblue') + ylab("Índice de Importancia")+  xlab("Variables")+
+  ggtitle("Random Forest") + 
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(panel.background = element_rect(fill = 'white', colour = 'black'))
+
+
+svm_varImpPlot<-ggplot(data= svm_varImp, aes(x=rownames(svm_varImp),y=Overall)) +
+  geom_bar(position="dodge",stat="identity",width = 0, color = "black") + 
+  coord_flip() + geom_point(color='skyblue') + ylab("Índice de Importancia")+xlab("Variables")+
+  ggtitle("Support Vector Machine") + 
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(panel.background = element_rect(fill = 'white', colour = 'black'))
+
+glm_varImpPlot<-ggplot(data= glm_varImp, aes(x=rownames(glm_varImp),y=Overall)) +
+  geom_bar(position="dodge",stat="identity",width = 0, color = "black") + 
+  coord_flip() + geom_point(color='skyblue') + ylab("Índice de Importancia")+xlab("Variables")+
+  ggtitle("Generalized Linear Models") + 
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(panel.background = element_rect(fill = 'white', colour = 'black'))
+
+knn_varImpPlot<-ggplot(data= knn_varImp, aes(x=rownames(knn_varImp),y=Overall)) +
+  geom_bar(position="dodge",stat="identity",width = 0, color = "black") + 
+  coord_flip() + geom_point(color='skyblue') + ylab("Índice de Importancia")+xlab("Variables")+
+  ggtitle("k-Nearest Neighbors") + 
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(panel.background = element_rect(fill = 'white', colour = 'black'))
+
+
+
 capture.output("RF_varImp",
                RF_varImp,
                "svm_varImp",
@@ -105,6 +133,20 @@ capture.output("RF_varImp",
                knn_varImp,
                file="varImp_Modelos.txt"
 )
+
+png(filename = "./Imagenes/Importancia_Variables.png", res = 300, width = 20, height = 20, units = "cm", pointsize = 13)
+ggarrange( RF_varImpPlot, 
+           svm_varImpPlot,
+           glm_varImpPlot, 
+           knn_varImpPlot, 
+           ncol =  2, 
+           nrow = 2)
+dev.off()
+
+
+
+
+
 
 ## test the model
 rf_mod_fit_predict=as.numeric(predict(rf_mod_fit, newdata=testing))
@@ -189,10 +231,10 @@ q0<-training$q0
 q1<-training$q1
 PesoHum500<-training$PesoHum500
 PesoHum300<-training$PesoHum300
-PC01<-training$PC01
-PC02<-training$PC02            
-PC03<-training$PC03
-
+PC01<-VibrioDataPCA$PC01
+PC02<-VibrioDataPCA$PC02            
+PC03<-VibrioDataPCA$PC03
+vibrioDatapcaTrain<-VibrioData$Vibrio
 
 Exp_NO2= expression(paste("Nitritos [NO"[2]^"-","] [",mu,"M]"))
 Exp_NO3= expression(paste("Nitratos [NO"[3]^"-","] [",mu,"M]"))
@@ -232,15 +274,10 @@ modelosEval_Factor(PesoHum500,"Peso Hum.Zoo.500 µm",Exp_PesoHum500, vibrioData,
 modelosEval_Factor(PesoHum300,"Peso Hum.Zoo.500 µm",Exp_PesoHum300, vibrioData, "Vibrio")
 modelosEval_Factor(q0,"Riqueza",Exp_q0, vibrioData, "Vibrio")
 modelosEval_Factor(q1,"Diversidad",Exp_q1, vibrioData, "Vibrio")
-modelosEval_Factor(PC01,"PC01","PC01", vibrioData, "Vibrio")
-modelosEval_Factor(PC02,"PC02","PC02", vibrioData, "Vibrio")            
-modelosEval_Factor(PC03,"PC03","PC03", vibrioData, "Vibrio") 
+modelosEval_Factor(PC01,"PC01","PC01", vibrioDatapcaTrain, "Vibrio")
+modelosEval_Factor(PC02,"PC02","PC02", vibrioDatapcaTrain, "Vibrio")            
+modelosEval_Factor(PC03,"PC03","PC03", vibrioDatapcaTrain, "Vibrio") 
 dev.off()
-
-
-
-
-
 
 ###############
 
@@ -275,14 +312,11 @@ Temperatura_Baja<-as.data.frame(Temperatura_Baja.tif, xy=TRUE)
 Salinidad_Alta<-as.data.frame(Salinidad_Alta.tif, xy=TRUE)
 Salinidad_Baja<-as.data.frame(Salinidad_Baja.tif, xy=TRUE)
 
-DensidadFito_Alta<-as.data.frame(DensidadFito_Alta.tif, xy=TRUE)
-DensidadFito_Baja<-as.data.frame(DensidadFito_Baja.tif, xy=TRUE)
+NO3_Alta<-as.data.frame(NO3_Alta.tif, xy=TRUE)
+NO3_Baja<-as.data.frame(NO3_Baja.tif, xy=TRUE)
 
-Clorofila_Alta<-as.data.frame(Clorofila_Alta.tif, xy=TRUE)
-Clorofila_Baja<-as.data.frame(Clorofila_Baja.tif, xy=TRUE)
-
-Densidad_Alta<-as.data.frame(Densidad_Alta.tif, xy=TRUE)
-Densidad_Baja<-as.data.frame(Densidad_Baja.tif, xy=TRUE)
+SST_Alta<-as.data.frame(SST_Alta.tif, xy=TRUE)
+SST_Baja<-as.data.frame(SST_Baja.tif, xy=TRUE)
 
 
 
@@ -309,17 +343,70 @@ Temperatura_Baja<-as.data.frame(Temperatura_Baja.tif, xy=TRUE)
 Salinidad_Alta<-as.data.frame(Salinidad_Alta.tif, xy=TRUE)
 Salinidad_Baja<-as.data.frame(Salinidad_Baja.tif, xy=TRUE)
 
-DensidadFito_Alta<-as.data.frame(DensidadFito_Alta.tif, xy=TRUE)
-DensidadFito_Baja<-as.data.frame(DensidadFito_Baja.tif, xy=TRUE)
+NO3_Alta<-as.data.frame(NO3_Alta.tif, xy=TRUE)
+NO3_Baja<-as.data.frame(NO3_Baja.tif, xy=TRUE)
 
-Clorofila_Alta<-as.data.frame(Clorofila_Alta.tif, xy=TRUE)
-Clorofila_Baja<-as.data.frame(Clorofila_Baja.tif, xy=TRUE)
+SST_Alta<-as.data.frame(SST_Alta.tif, xy=TRUE)
+SST_Baja<-as.data.frame(SST_Baja.tif, xy=TRUE)
 
-Alta_data_variables<-cbind(Temperatura_Alta$layer,Salinidad_Alta$layer, DensidadFito_Alta$layer, Clorofila_Alta$layer)
-colnames(Alta_data_variables)<-c("Temperatura", "Salinidad", "DensidadFito", "Clorofila")
+NO2_Alta<-as.data.frame(NO2_Alta.tif, xy=TRUE)
+NO2_Baja<-as.data.frame(NO2_Baja.tif, xy=TRUE)
 
-Baja_data_variables<-cbind(Temperatura_Baja$layer,Salinidad_Baja$layer, DensidadFito_Baja$layer, Clorofila_Baja$layer)
-colnames(Baja_data_variables)<-c("Temperatura", "Salinidad","DensidadFito", "Clorofila")
+Transparencia_Alta<-as.data.frame(Transparencia_Alta.tif, xy=TRUE)
+Transparencia_Baja<-as.data.frame(Transparencia_Baja.tif, xy=TRUE)
+
+PesoHum300_Alta<-as.data.frame(PesoHum300_Alta.tif, xy=TRUE)
+PesoHum300_Baja<-as.data.frame(PesoHum300_Baja.tif, xy=TRUE)
+
+q1_Alta<-as.data.frame(q1_Alta.tif, xy=TRUE)
+q1_Baja<-as.data.frame(q1_Baja.tif, xy=TRUE)
+
+
+
+
+
+
+Alta_data_variables<-cbind(Temperatura_Alta$layer,
+                           Salinidad_Alta$layer, 
+                           NO3_Alta$layer, 
+                           SST_Alta$layer,
+                           NO2_Alta$layer,
+                           Transparencia_Alta$layer,
+                           PesoHum300_Alta$layer,
+                           q1_Alta$layer
+                           )
+
+
+
+colnames(Alta_data_variables)<-c("Temperatura", 
+                                 "Salinidad", 
+                                 "NO3", 
+                                 "SST",
+                                 "NO2",
+                                 "Transparencia",
+                                 "PesoHum300",
+                                 "q1"
+                                 )
+
+Baja_data_variables<-cbind(Temperatura_Baja$layer,
+                           Salinidad_Baja$layer, 
+                           NO3_Baja$layer, 
+                           SST_Baja$layer,
+                           NO2_Baja$layer,
+                           Transparencia_Baja$layer,
+                           PesoHum300_Baja$layer,
+                           q1_Baja$layer)
+
+
+
+colnames(Baja_data_variables)<-c("Temperatura", 
+                                 "Salinidad", 
+                                 "NO3", 
+                                 "SST",
+                                 "NO2",
+                                 "Transparencia",
+                                 "PesoHum300",
+                                 "q1")
 
 ######Probabilidad
 rf_Alta_predict=predict(rf_mod_fit, newdata=Alta_data_variables, type="prob") #Se puede predecir con distribución probabilistica predict (type="prob") o categórica (type="raw")
@@ -423,7 +510,7 @@ glm_MB_prob<-ggplot(glm_Baja, aes(Longitud, Latitud)) +
                                    "#d53e4f"))+
   labs(fill="Probabilidad", title= "glm - Marea Baja")
 
-png(filename = "./Imagenes/Probabilidad_ML.png", res = 300, width = 18, height = 24, units = "cm", pointsize = 13)
+png(filename = "./Imagenes/Probabilidad_ML2.png", res = 300, width = 18, height = 24, units = "cm", pointsize = 13)
 
 ggarrange( glm_MA_prob, glm_MB_prob,rf_MA_prob, rf_MB_prob, ncol =  2, nrow = 2,common.legend = F, legend ="bottom")
 dev.off()
