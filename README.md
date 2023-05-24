@@ -2,7 +2,7 @@
 [![Expedición Pacifico: Bocas de Sanquianga](/Imagenes_MD/Cabezote.png)](https://youtu.be/Rsuj0Ps-Ugk)
 
 <p align="center" width="100%">
-<img src = "/Imagenes_MD/Logos.png" width="200px" height="200px" style="float"/>
+<img src = "/Imagenes_MD/Logos.png" width="200px" height="224px" style="float"/>
 </p>
 
 # Presencia de *Vibrio* spp en la subregión Sanquianga-Gorgona y su relación con las condiciones hidrográficas
