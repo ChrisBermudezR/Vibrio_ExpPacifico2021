@@ -2,7 +2,7 @@
 [![Expedición Pacifico: Bocas de Sanquianga](/Imagenes_MD/Cabezote.png)](https://youtu.be/Rsuj0Ps-Ugk)
 
 <p align="center" width="100%">
-<img src = "/Imagenes_MD/Logos.png" width="650px" height="300px" style="float"/>
+<img src = "/Imagenes_MD/Logos.png" width="200px" height="200px" style="float"/>
 </p>
 
 # Presencia de *Vibrio* spp en la subregión Sanquianga-Gorgona y su relación con las condiciones hidrográficas
@@ -27,7 +27,7 @@ Evaluar la presencia del género bacteriano *Vibrio* spp (Vibrionales: Vibrionac
 
 
 <p align="center" width="75%">
-    <img width="50%" src="/Imagenes_MD/Mapa_Estaciones_Bocas2.png">
+    <img width="75%" src="/Imagenes_MD/Mapa_Estaciones_Bocas2.png">
 </p>
 <p align="center" width="100%">
 <b>Figura 1</b>. Distribución de las estaciones de toma de muestras de *Vibrio* spp. en el área de estudio. 
